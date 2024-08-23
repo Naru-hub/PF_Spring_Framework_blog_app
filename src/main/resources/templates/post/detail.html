@@ -10,15 +10,17 @@
 <body>
 	<div class="container">
 		<div class="row">
-				<h2 class="offset-md-2">投稿詳細</h2>
+			<h2 class="offset-md-2">投稿詳細</h2>
 			<div class="col-md-8 offset-md-2 text-center">
 				<!-- 画像が存在する場合 -->
-				<span th:if="${post.imagePath != ''}">
-					<img th:src="@{${post.imagePath}}" alt="Example Image" class="img-fluid" style="max-width: auto; height: auto;">
+				<span th:if="${post.imagePath != null and post.imagePath != ''}">
+					<img th:src="@{${post.imagePath}}" alt="Example Image" class="img-fluid mb-2"
+						style="max-width: auto; height: auto;">
 				</span>
 				<!-- 画像が存在しない場合 -->
-				<span th:unless="${post.imagePath != ''}">
-					<img th:src="@{/uploads/profile_default.jpg}" alt="Example Image" class="img-fluid" style="max-width: auto; height: auto;">
+				<span th:unless="${post.imagePath != null and post.imagePath != ''}">
+					<img th:src="@{/uploads/profile_default.jpg}" alt="Example Image" class="img-fluid"
+						style="max-width: auto; height: auto;">
 					<p>No image available</p>
 				</span>
 			</div>

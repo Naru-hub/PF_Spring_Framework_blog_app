@@ -18,6 +18,9 @@ public class ImageService {
 
 	/**
 	 * 画像ファイルの処理と保存
+	 * @param file
+	 * @return uniqueFilename ファイル名
+	 * @throws IOException
 	 */
 	public String handleImageUpload(MultipartFile file) throws IOException {
 		if (file != null && !file.isEmpty()) {
@@ -34,10 +37,23 @@ public class ImageService {
 			/** 指定されたパスにファイルを保存 */
 			Path path = Paths.get(dir.getAbsolutePath() + File.separator + uniqueFilename);
 			Files.write(path, file.getBytes());
-
-			// ファイルパスを相対パスとして返す
-			return "/uploads/" + uniqueFilename;
+			
+			// ファイル名を返す
+			return uniqueFilename;
 		}
 		return null;
 	}
+	
+	/**
+	 * 画像ファイルを削除
+	 * @param filename
+	 */
+	public void deleteImage(String filename) {
+        if (filename != null && !filename.isEmpty()) {
+            File file = new File(UPLOADED_FOLDER + filename);
+            if (file.exists()) {
+                file.delete();
+            }
+        }
+    }
 }
