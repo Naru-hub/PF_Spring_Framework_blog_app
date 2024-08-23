@@ -40,8 +40,7 @@
 								</span>
 								<!-- 画像が存在しない場合 -->
 								<span th:unless="${post.imagePath != ''}">
-									<img th:src="@{/uploads/profile_default.jpg}" alt="Example Image"
-										class="img-thumbnail w-25">
+									<img th:src="@{/uploads/profile_default.jpg}" alt="Example Image" class="img-thumbnail w-25">
 									<p>No image available</p>
 								</span>
 							</td>
@@ -56,7 +55,6 @@
 			</div>
 		</div>
 	</div>
-
 </body>
 
 </html>
