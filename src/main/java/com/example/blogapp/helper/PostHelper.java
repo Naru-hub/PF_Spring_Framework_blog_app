@@ -7,6 +7,8 @@ import com.example.blogapp.form.PostForm;
 public class PostHelper {
 	/**
 	 * Postへの変換
+	 * @param form
+	 * @return post オブジェクト
 	 */
 	public static Post convertPost(PostForm form) {
 		Post post = new Post();
@@ -20,6 +22,8 @@ public class PostHelper {
 
 	/**
 	 * PostFormへの変換
+	 * @param post
+	 * @return form (postの値をセット)
 	 */
 	public static PostForm convertPostForm(Post post) {
 		PostForm form = new PostForm();
