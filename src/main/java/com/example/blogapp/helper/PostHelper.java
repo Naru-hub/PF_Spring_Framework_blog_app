@@ -27,7 +27,7 @@ public class PostHelper {
 		form.setTitle(post.getTitle());
 		form.setDescription(post.getDescription());
 		/** 画像のパスをセット */
-		post.setImagePath(form.getImagePath()); 
+		form.setImagePath(post.getImagePath()); 
 		// 更新画面設定
 		form.setIsNew(false);
 		return form;

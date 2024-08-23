@@ -35,6 +35,8 @@ public class PostController {
 
 	/**
 	 * 投稿一覧を表示
+	 * @param model
+	 * @return
 	 */
 	@GetMapping("")
 	public String list(Model model) {
@@ -82,24 +84,23 @@ public class PostController {
 		// === バリデーションチェック ===
 		// 入力チェックNG:入力画面を表示する
 		if (bindingResult.hasErrors()) {
-			System.out.println(bindingResult.hasErrors());
 			// 新規登録画面の設定
 			form.setIsNew(true);
 			return "post/form";
 		}
 
 		// 画像ファイルの処理
-        try {
-        	 if (form.getFile() != null && !form.getFile().isEmpty()) {
-                 String imagePath = imageService.handleImageUpload(form.getFile());
-                 form.setImagePath(imagePath); 
-             }
-        } catch (IOException e) {
-            // エラーハンドリング
-            bindingResult.reject("fileUploadError", "画像のアップロードに失敗しました。");
-            form.setIsNew(true);
-            return "post/form";
-        }
+		try {
+			if (form.getFile() != null && !form.getFile().isEmpty()) {
+				String imagePath = "/uploads/" + imageService.handleImageUpload(form.getFile());
+				form.setImagePath(imagePath);
+			}
+		} catch (IOException e) {
+			// エラーハンドリング
+			bindingResult.reject("fileUploadError", "画像のアップロードに失敗しました。");
+			form.setIsNew(true);
+			return "post/form";
+		}
 
 		// エンティティへの変換(Postオブジェクトの作成)
 		Post post = PostHelper.convertPost(form);
@@ -149,14 +150,65 @@ public class PostController {
 			return "post/form";
 		}
 
-		// エンティティへの変換
-		Post post = PostHelper.convertPost(form);
-		// 更新処理
-		postService.updatePost(post);
-		// フラッシュメッセージ
-		attributes.addFlashAttribute("message", "投稿が更新されました");
-		// RPGパターン
-		return "redirect:/posts";
+		// 元の投稿の取得
+		Post existingPost = postService.findByIdPost(form.getId());
+		// 編集するイメージファイル名とイメージパス
+		String newImageFilename = null;
+		String newImagePath = null;
+
+		try {
+			// 新しい画像ファイルの処理
+			if (form.getFile() != null && !form.getFile().isEmpty()) {
+				try {
+					// 新しい画像のファイル名を取得
+					newImageFilename = imageService.handleImageUpload(form.getFile());
+					// ファイルパスを相対パスでセットする
+					newImagePath = "/uploads/" + newImageFilename;
+					form.setImagePath(newImagePath);
+					
+				} catch (IOException e) {
+					// 画像のアップロードに失敗した場合の処理
+					bindingResult.reject("fileUploadError", "画像のアップロードに失敗しました。");
+					form.setIsNew(false);
+					return "post/form";
+				}
+			} else {
+				// 画像ファイルが選択されていない場合は既存の画像パスをそのまま使用
+				if (existingPost != null && existingPost.getImagePath() != null) {
+					form.setImagePath(existingPost.getImagePath());
+				}
+			}
+
+			// エンティティへの変換
+			Post post = PostHelper.convertPost(form);
+			// 更新処理
+			postService.updatePost(post);
+
+			// 古い画像ファイルの削除（更新処理が成功した場合のみ）
+			if (existingPost != null && existingPost.getImagePath() != null) {
+				// 相対パスからファイル名を取得
+				String oldImageFilename = existingPost.getImagePath().replace("/uploads/", "");
+				if (newImageFilename != null && !oldImageFilename.equals(newImageFilename)) {
+					imageService.deleteImage(oldImageFilename);
+				}
+			}
+
+			// フラッシュメッセージ
+			attributes.addFlashAttribute("message", "投稿が更新されました");
+			// RPGパターン
+			return "redirect:/posts";
+
+		} catch (Exception e) {
+			// 投稿の更新処理でエラーが発生した場合の処理
+			if (newImageFilename != null) {
+				// 新しい画像ファイルを削除
+				imageService.deleteImage(newImageFilename);
+			}
+
+			bindingResult.reject("updateError", "投稿の更新に失敗しました。");
+			form.setIsNew(false);
+			return "post/form";
+		}
 	}
 
 	/**

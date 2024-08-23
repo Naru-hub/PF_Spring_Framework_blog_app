@@ -35,13 +35,12 @@
 							<td th:text="${post.id}"></td>
 							<td class="text-center">
 								<!-- 画像が存在する場合 -->
-								<span th:if="${post.imagePath != ''}">
+								<span th:if="${post.imagePath != null and post.imagePath != ''}">
 									<img th:src="@{${post.imagePath}}" alt="Example Image" class="img-thumbnail w-25">
 								</span>
 								<!-- 画像が存在しない場合 -->
-								<span th:unless="${post.imagePath != ''}">
-									<img th:src="@{/uploads/profile_default.jpg}" alt="Example Image"
-										class="img-thumbnail w-25">
+								<span th:unless="${post.imagePath != null and post.imagePath != ''}">
+									<img th:src="@{/uploads/profile_default.jpg}" alt="Example Image" class="img-thumbnail w-25">
 									<p>No image available</p>
 								</span>
 							</td>
@@ -56,7 +55,6 @@
 			</div>
 		</div>
 	</div>
-
 </body>
 
 </html>
