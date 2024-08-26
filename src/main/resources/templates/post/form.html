@@ -3,17 +3,19 @@
 
 <head>
 	<meta charset="UTF-8">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<title>投稿フォーム</title>
 </head>
 
 <body>
+	<div id="header" th:insert="common::header"></div>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-8 offset-md-2">
+			<div class="col-md-8 offset-md-2 mb-5">
 				<!-- タイトル：登録 or 編集 -->
-				<h2 th:if="${postForm.isNew}">新規投稿</h2>
-				<h2 th:unless="${postForm.isNew}">投稿編集</h2>
+				<h2 th:if="${postForm.isNew}" class="mt-3">新規投稿</h2>
+				<h2 th:unless="${postForm.isNew}" class="mt-3">投稿編集</h2>
 				<!-- アクション：登録 or 編集 -->
 				<form th:action="${postForm.isNew} ? @{/posts/save} : @{/posts/update}" th:object="${postForm}"
 					method="post" enctype="multipart/form-data">
@@ -40,23 +42,31 @@
 						<input type="file" class="form-control" id="file" name="file">
 						<!-- 画像の表示 -->
 						<div>
-							<img th:if="${postForm.imagePath != null}" th:src="@{${postForm.imagePath}}" alt="Current Image" class="img-thumbnail w-25 mt-1">
-							<img th:unless="${postForm.imagePath != null}" th:src="@{/uploads/profile_default.jpg}" alt="Default Image" class="img-thumbnail w-25 mt-1">
+							<img th:if="${postForm.imagePath != null and postForm.imagePath != ''}"
+								th:src="@{${postForm.imagePath}}" alt="Current Image" class="img-thumbnail w-25 mt-1">
+							<img th:if="${postForm.imagePath == null or postForm.imagePath == ''}"
+								th:src="@{/uploads/profile_default.jpg}" alt="Default Image"
+								class="img-thumbnail w-25 mt-1">
 						</div>
 					</div>
 
-					<div class="mt-4">
+					<div class="d-flex flex-row-reverse">
 						<!-- ボタン：登録 or 編集 -->
-						<input th:if="${postForm.isNew}" type="submit" value="保存" class="btn btn-outline-dark">
-						<input th:unless="${postForm.isNew}" type="submit" value="更新" class="btn btn-outline-dark">
+						<span th:if="${postForm.isNew}">
+							<input th:if="${postForm.isNew}" type="submit" value="保存" class="btn btn-outline-dark">
+							<a th:href="@{/posts}" class="btn btn-outline-secondary mx-2">キャンセル</a>
+						</span>
+						<span th:unless="${postForm.isNew}">
+							<input type="submit" value="更新" class="btn btn-outline-dark">
+							<a th:href="@{/posts/{id}(id=${postForm.id})}"
+								class="btn btn-outline-secondary mx-2">キャンセル</a>
+						</span>
 					</div>
 				</form>
 			</div>
-			<div class="col-md-2 offset-md-2 my-5">
-				<a th:href="@{/posts}" style="color: gray;">戻る</a>
-			</div>
 		</div>
 	</div>
+	<div id="footer" th:insert="common::footer"></div>
 </body>
 
 </html>

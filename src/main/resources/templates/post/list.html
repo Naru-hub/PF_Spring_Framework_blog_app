@@ -3,14 +3,16 @@
 
 <head>
 	<meta charset="UTF-8">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 	<title>投稿一覧</title>
 </head>
 
 <body>
-	<div class="container">
+	<div id="header" th:insert="common::header"></div>
+	<div class="container" style="min-height: 600px;">
 		<div class="row">
-			<div class="col-md-8 offset-md-2">
+			<div class="col-md-8 offset-md-2 mt-5">
 				<h2>投稿一覧</h2>
 				<!-- フラッシュメッセージの表示 -->
 				<div th:if="${message}" th:text="${message}" class="alert alert-primary" role="alert">
@@ -51,10 +53,13 @@
 						</tr>
 					</tbody>
 				</table>
-				<a th:href="@{/posts/form}" class="btn btn-outline-dark">新規登録</a>
+			</div>
+			<div class="col-md-2 mt-5">
+				<a th:href="@{/posts/form}" class="btn btn-outline-dark">新規登録</a>		
 			</div>
 		</div>
 	</div>
+	<div id="footer" th:insert="common::footer"></div>
 </body>
 
 </html>

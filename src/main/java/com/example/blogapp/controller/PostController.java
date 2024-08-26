@@ -36,7 +36,7 @@ public class PostController {
 	/**
 	 * 投稿一覧を表示
 	 * @param model
-	 * @return
+	 * @return String ビュー名
 	 */
 	@GetMapping("")
 	public String list(Model model) {
@@ -46,6 +46,10 @@ public class PostController {
 
 	/**
 	 * 指定されたIDの投稿の詳細を表示
+	 * @param id
+	 * @param model
+	 * @param attributes
+	 * @return String ビュー名
 	 */
 	@GetMapping("/{id}")
 	public String detail(@PathVariable Integer id, Model model, RedirectAttributes attributes) {
@@ -65,7 +69,9 @@ public class PostController {
 	}
 
 	/**
-	 *  新規登録画面を表示
+	 * 新規登録画面を表示
+	 * @param form
+	 * @return String ビュー名
 	 */
 	@GetMapping("/form")
 	public String newPost(@ModelAttribute PostForm form) {
@@ -76,6 +82,10 @@ public class PostController {
 
 	/**
 	 * 新規登録を実行
+	 * @param form
+	 * @param bindingResult
+	 * @param attributes
+	 * @return String ビュー名
 	 */
 	@PostMapping("/save")
 	public String create(@Validated PostForm form,
@@ -114,6 +124,10 @@ public class PostController {
 
 	/**
 	 * 指定されたIDの投稿の編集画面を表示
+	 * @param id
+	 * @param model
+	 * @param attributes
+	 * @return String ビュー名
 	 */
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable Integer id, Model model, RedirectAttributes attributes) {
@@ -137,6 +151,10 @@ public class PostController {
 
 	/**
 	 * 投稿の情報を更新
+	 * @param form
+	 * @param bindingResult
+	 * @param attributes
+	 * @return String ビュー名
 	 */
 	@PostMapping("/update")
 	public String update(@Validated PostForm form,
@@ -213,14 +231,41 @@ public class PostController {
 
 	/**
 	 * 指定されたIDの投稿の削除
+	 * @param id
+	 * @param attributes
+	 * @return String ビュー名
 	 */
 	@PostMapping("/delete/{id}")
 	public String delete(@PathVariable Integer id, RedirectAttributes attributes) {
-		// 削除処理
-		postService.deletePost(id);
-		// フラッシュメッセージ
-		attributes.addFlashAttribute("message", "投稿が削除されました");
-		// RPGパターン
-		return "redirect:/posts";
+		try {
+	        // 投稿の取得
+	        Post post = postService.findByIdPost(id);
+	        
+	        if (post != null) {
+	            // 投稿に関連する画像のパスを取得
+	            String imagePath = post.getImagePath();
+	            
+	            // 投稿を削除
+	            postService.deletePost(id);
+
+	            // 画像ファイルを削除
+	            if (imagePath != null && !imagePath.isEmpty()) {
+	                String filename = imagePath.replace("/uploads/", "");
+	                imageService.deleteImage(filename);
+	            }
+
+	            // フラッシュメッセージ
+	            attributes.addFlashAttribute("message", "投稿が削除されました");
+	        } else {
+	            // 投稿が見つからない場合の処理
+	            attributes.addFlashAttribute("errorMessage", "対象データがありません");
+	        }
+	    } catch (Exception e) {
+	        // 例外が発生した場合の処理
+	        attributes.addFlashAttribute("errorMessage", "投稿の削除に失敗しました");
+	    }
+
+	    // RPGパターン
+	    return "redirect:/posts";
 	}
 }
