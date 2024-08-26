@@ -34,6 +34,13 @@
 							<a class="nav-link text-white" th:href="@{/posts}"><i class="fa-regular fa-face-smile"></i>
 								ユーザー情報</a>
 						</li>
+						<li class="nav-item">
+							<form th:action="@{/logout}" method="post">
+								<button type="submit" class="nav-link bg-dark text-white border border-0">
+									<i class="fa-solid fa-sign-out-alt"></i> ログアウト
+								</button>
+							</form>
+						</li>
 					</ul>
 				</div>
 			</nav>
