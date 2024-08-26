@@ -237,11 +237,35 @@ public class PostController {
 	 */
 	@PostMapping("/delete/{id}")
 	public String delete(@PathVariable Integer id, RedirectAttributes attributes) {
-		// 削除処理
-		postService.deletePost(id);
-		// フラッシュメッセージ
-		attributes.addFlashAttribute("message", "投稿が削除されました");
-		// RPGパターン
-		return "redirect:/posts";
+		try {
+	        // 投稿の取得
+	        Post post = postService.findByIdPost(id);
+	        
+	        if (post != null) {
+	            // 投稿に関連する画像のパスを取得
+	            String imagePath = post.getImagePath();
+	            
+	            // 投稿を削除
+	            postService.deletePost(id);
+
+	            // 画像ファイルを削除
+	            if (imagePath != null && !imagePath.isEmpty()) {
+	                String filename = imagePath.replace("/uploads/", "");
+	                imageService.deleteImage(filename);
+	            }
+
+	            // フラッシュメッセージ
+	            attributes.addFlashAttribute("message", "投稿が削除されました");
+	        } else {
+	            // 投稿が見つからない場合の処理
+	            attributes.addFlashAttribute("errorMessage", "対象データがありません");
+	        }
+	    } catch (Exception e) {
+	        // 例外が発生した場合の処理
+	        attributes.addFlashAttribute("errorMessage", "投稿の削除に失敗しました");
+	    }
+
+	    // RPGパターン
+	    return "redirect:/posts";
 	}
 }
