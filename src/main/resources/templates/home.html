@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<title>Home</title>
+</head>
+
+<body>
+	<div id="header" th:insert="common::header"></div>
+	<div class="container" 	style="min-height: 600px;">
+		<div class="row">
+			<div class="col-md-8 offset-md-2 text-center">
+				<h1 class="text-center my-5 pt-5"><i class="fa-solid fa-ice-cream"></i>投稿アプリへようこそ</h1>
+				<p class="text-center my-5">ダイエット中に食べれる<i class="fa-solid fa-cookie-bite"></i>美味しいお菓子の情報をみんなで投稿して共有しよう！
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<div id="footer" th:insert="common::footer"></div>
+</body>
+
+</html>

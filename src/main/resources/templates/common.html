@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<title>components</title>
+</head>
+
+<body>
+	<!DOCTYPE html>
+	<html xmlns:th="http://www.thymeleaf.org">
+
+	<head>
+		<meta charset="UTF-8">
+		<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+		<title>components</title>
+	</head>
+
+	<body>
+		<div th:fragment="header">
+			<nav class="navbar bg-dark border-bottom border-bottom-dark navbar-expand-lg bg-body-tertiary">
+				<div class="container-fluid d-flex justify-content-end">
+					<ul class="navbar-nav">
+						<li class="nav-item">
+							<a class="nav-link text-white" th:href="@{/}"><i class="fa-solid fa-house"></i> Home</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link text-white" th:href="@{/posts}"><i class="fa-solid fa-list"></i> 投稿一覧</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link text-white" th:href="@{/posts}"><i class="fa-regular fa-face-smile"></i>
+								ユーザー情報</a>
+						</li>
+					</ul>
+				</div>
+			</nav>
+		</div>
+
+		<div th:fragment="footer">
+			<div class="container-fluid">
+				<div class="row bg-dark border-bottom border-bottom-dark">
+					<div class="mx-auto text-white mt-1">
+						<p>© Nona</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</body>
+
+	</html>
+
+
+</body>
+
+</html>
