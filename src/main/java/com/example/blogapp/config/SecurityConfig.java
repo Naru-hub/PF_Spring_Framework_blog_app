@@ -20,6 +20,7 @@ public class SecurityConfig {
 			.requestMatchers("/").permitAll()
 			// その他のリクエストは認証が必要
 			.anyRequest().authenticated())
+			
 			// フォームベースのログイン設定		
 			.formLogin(form -> form
 			// カスタムログインページのURLを指定
@@ -33,7 +34,18 @@ public class SecurityConfig {
 			// ログイン成功時のリダイレクト先を指定
 			.defaultSuccessUrl("/")
 			// ログイン失敗時のリダイレクト先を指定
-			.failureUrl("/login?error")
+			.failureUrl("/login?error"))
+			
+			// ログアウト設定
+			.logout(logout -> logout
+			// ログアウトを処理するURLを指定
+			.logoutUrl("/logout")
+			// ログアウト成功時のリダイレクト先を指定
+			.logoutSuccessUrl("/login?logout")
+			// ログアウト時にセッションを無効にする
+			.invalidateHttpSession(true)
+			// ログアウト時にCookieを削除する
+			.deleteCookies("JSESSIONID")
 			);
 		return http.build();
 	}
