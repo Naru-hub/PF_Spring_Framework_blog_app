@@ -6,9 +6,17 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
+import lombok.RequiredArgsConstructor;
+
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
+	
+//	/** DI対象が存在すれば、DIして使用する */
+//	 private final UserDetailsService userDetailsService;
+//	 private final PasswordEncoder passwordEncoder;
+	
 	// SecurityFilterChainのBean定義
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -17,6 +25,7 @@ public class SecurityConfig {
 			.authorizeHttpRequests(authz -> authz
 			// 「/login」へのアクセスは認証を必要としない
 			.requestMatchers("/login").permitAll()
+			.requestMatchers("/register").permitAll()
 			.requestMatchers("/").permitAll()
 			// その他のリクエストは認証が必要
 			.anyRequest().authenticated())

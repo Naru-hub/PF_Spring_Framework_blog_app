@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.blogapp.repository.AuthUserMapper">
+	<!-- ユーザー名で認証情報を検索 -->
+	<select id="selectByUsername"
+		resultType="com.example.blogapp.entity.AuthUser">
+		SELECT username, password 
+		FROM auth_users 
+		WHERE username = #{username}
+	</select>
+	
+	<!-- ユーザー登録 -->
+	<insert id="insertUser" parameterType="com.example.blogapp.entity.AuthUser">
+        INSERT INTO auth_users (username, password, email, enabled)
+        VALUES (#{username}, #{password}, #{email}, #{enabled})
+    </insert>
+</mapper>
