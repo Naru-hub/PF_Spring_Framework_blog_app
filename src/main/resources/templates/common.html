@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 
 <head>
 	<meta charset="UTF-8">
@@ -24,15 +24,27 @@
 			<nav class="navbar bg-dark border-bottom border-bottom-dark navbar-expand-lg bg-body-tertiary">
 				<div class="container-fluid d-flex justify-content-end">
 					<ul class="navbar-nav">
+						<li sec:authorize="!isAuthenticated()" class="nav-item">
+							<a class="nav-link text-white" th:href="@{/login}"><i class="fa-solid fa-right-to-bracket"></i> ログイン</a>
+						</li>
+						<li sec:authorize="!isAuthenticated()" class="nav-item">
+							<a class="nav-link text-white" th:href="@{/register}"><i class="fa-solid fa-file-pen"></i> ユーザー新規登録</a>
+						</li>
 						<li class="nav-item">
 							<a class="nav-link text-white" th:href="@{/}"><i class="fa-solid fa-house"></i> Home</a>
 						</li>
-						<li class="nav-item">
+						<li sec:authorize="isAuthenticated()" class="nav-item">
 							<a class="nav-link text-white" th:href="@{/posts}"><i class="fa-solid fa-list"></i> 投稿一覧</a>
 						</li>
-						<li class="nav-item">
-							<a class="nav-link text-white" th:href="@{/posts}"><i class="fa-regular fa-face-smile"></i>
-								ユーザー情報</a>
+						<li sec:authorize="isAuthenticated()" class="nav-item">
+							<a class="nav-link text-white" th:href="@{/posts}">	<i class="fa-regular fa-circle-user"></i> ユーザー情報</a>
+						</li>
+						<li sec:authorize="isAuthenticated()" class="nav-item">
+							<form th:action="@{/logout}" method="post">
+								<button type="submit" class="nav-link bg-dark text-white border border-0">
+									<i class="fa-solid fa-sign-out-alt"></i> ログアウト
+								</button>
+							</form>
 						</li>
 					</ul>
 				</div>

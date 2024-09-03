@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<title>ログイン</title>
+</head>
+
+<body>
+	<div id="header" th:insert="common::header"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-md-8 offset-md-2 my-5">
+
+				<h2>ログイン画面</h2>
+				<!-- エラー表示 -->
+				<div th:if="${param.error}">
+					<p style="color: red;">ユーザー名またはパスワードが違います</p>
+				</div>
+				<!-- ログアウト表示 -->
+				<div th:if="${param.logout}">
+					<p style="color: blue;">ログアウトしました</p>
+				</div>
+				<form th:action="@{/auth}" method="post" th:object="${loginForm}">
+
+					<div class="my-3">
+						<label for="usernameInput" class="form-label">username</label>
+						<input type="text" th:field="*{username}" class="form-control" id="usernameInput"
+							placeholder="ユーザー名を入力">
+					</div>
+					<div class="my-3">
+						<label for="passwordInput" class="form-label">password</label>
+						<input type="password" th:field="*{password}" class="form-control" id="passwordInput"
+							placeholder="パスワードを入力">
+					</div>
+					<div class="my-3">
+						<input type="submit" value="login" class="btn btn-outline-dark">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
