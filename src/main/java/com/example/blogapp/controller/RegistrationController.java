@@ -34,7 +34,7 @@ public class RegistrationController {
 	/**
 	 * ユーザーの新規登録
 	 * @param form
-	 * @return
+	 * @return String ビュー名
 	 */
 	@PostMapping("/register")
 	public String registerUser(@ModelAttribute RegisterForm form) {

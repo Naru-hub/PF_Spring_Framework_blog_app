@@ -1,19 +1,36 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="UTF-8">
-<title>登録画面</title>
+	<meta charset="UTF-8">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<title>新規登録画面</title>
 </head>
 <body>
-	<h2>登録画面</h2>
-	   <form th:action="@{/register}" method="post" th:object="${registerForm}">
-	       <label for="username">Username:</label>
-	       <input type="text" th:field="*{username}" id="username" name="username" required><br>
-	       <label for="password">Password:</label>
-	       <input type="password" th:field="*{password}" id="password" name="password" required><br>
-	       <label for="email">Email:</label>
-	       <input type="email" th:field="*{email}" id="email" name="email" required><br>
-	       <input type="submit" value="Register">
-	   </form>
+	<div id="header" th:insert="common::header"></div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 offset-md-2 my-5">
+					<h2>新規登録画面</h2>
+					   <form th:action="@{/register}" method="post" th:object="${registerForm}">
+							<div class="my-3">
+								<label for="username" class="form-label">username</label>
+								<input type="text" th:field="*{username}" class="form-control" id="username" name="username" required placeholder="ユーザー名を入力">
+							</div>
+							<div class="my-3">
+						       <label for="password" class="form-label">password</label>
+						       <input type="password" th:field="*{password}" class="form-control" id="password" name="password" required>	
+							</div>
+							<div class="my-3">
+						       <label for="email">email</label>
+						       <input type="email" th:field="*{email}" class="form-control" id="email" name="email" required>
+							</div>
+							<div class="my-3">
+						       <input type="submit" value="Register" class="btn btn-outline-dark">	
+							</div>
+					   </form>
+				</div>
+			</div>	
+		</div>
 </body>
 </html>

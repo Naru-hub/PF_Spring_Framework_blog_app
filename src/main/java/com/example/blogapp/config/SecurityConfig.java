@@ -13,19 +13,17 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SecurityConfig {
 	
-//	/** DI対象が存在すれば、DIして使用する */
-//	 private final UserDetailsService userDetailsService;
-//	 private final PasswordEncoder passwordEncoder;
-	
 	// SecurityFilterChainのBean定義
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		http
 			// HTTPリクエストに対するセキュリティ設定
 			.authorizeHttpRequests(authz -> authz
-			// 「/login」へのアクセスは認証を必要としない
+			//「/login」へのアクセスは認証を必要としない
 			.requestMatchers("/login").permitAll()
+			//「/register」へのアクセスは認証を必要としない
 			.requestMatchers("/register").permitAll()
+			// ホームへのアクセスは認証を必要としない
 			.requestMatchers("/").permitAll()
 			// その他のリクエストは認証が必要
 			.anyRequest().authenticated())
