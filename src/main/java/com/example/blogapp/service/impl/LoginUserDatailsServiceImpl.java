@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.blogapp.entity.AuthUser;
 import com.example.blogapp.entity.LoginUser;
@@ -17,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 * カスタム認証サービス
 */
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class LoginUserDatailsServiceImpl implements UserDetailsService {
 	/** DI */
@@ -42,6 +44,10 @@ public class LoginUserDatailsServiceImpl implements UserDetailsService {
 		}
 	}
 	
+	/**
+	 * ユーザーをデータベースに登録
+	 * @param authUser
+	 */
 	public void registerUser(AuthUser authUser) {
 		authUserMapper.insertUser(authUser);
     }

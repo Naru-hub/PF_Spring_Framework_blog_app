@@ -20,12 +20,22 @@ public class RegistrationController {
 	private final LoginUserDatailsServiceImpl userDetailsService;
 	private final PasswordEncoder passwordEncoder;
 
+	/**
+	 * ユーザーの登録フォームを表示
+	 * @param model
+	 * @return String ビュー名
+	 */
 	@GetMapping("/register")
 	public String showRegistrationForm(Model model) {
 		 model.addAttribute("registerForm", new RegisterForm()); 
 		return "register";
 	}
 
+	/**
+	 * ユーザーの新規登録
+	 * @param form
+	 * @return
+	 */
 	@PostMapping("/register")
 	public String registerUser(@ModelAttribute RegisterForm form) {
 		AuthUser user = new AuthUser();
@@ -33,7 +43,6 @@ public class RegistrationController {
 		user.setPassword(passwordEncoder.encode(form.getPassword()));
 		user.setEmail(form.getEmail());
 		user.setEnabled(true);
-		System.out.println(user); // 確認後で消す
 		userDetailsService.registerUser(user);
 		return "redirect:/login";
 	}
