@@ -9,6 +9,14 @@
 		WHERE username = #{username}
 	</select>
 	
+	<!-- ユーザー名でユーザーIDを検索 -->
+	<select id="selectByUserId"
+		resultType="com.example.blogapp.entity.AuthUser">
+		SELECT id, username
+		FROM auth_users 
+		WHERE username = #{username}
+	</select>
+	
 	<!-- ユーザー登録 -->
 	<insert id="insertUser" parameterType="com.example.blogapp.entity.AuthUser">
         INSERT INTO auth_users (username, password, email, enabled)

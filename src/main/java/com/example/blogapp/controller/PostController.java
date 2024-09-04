@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.blogapp.entity.Post;
 import com.example.blogapp.form.PostForm;
 import com.example.blogapp.helper.PostHelper;
+import com.example.blogapp.helper.UserHelper;
 import com.example.blogapp.service.ImageService;
 import com.example.blogapp.service.PostService;
 
@@ -32,6 +33,7 @@ public class PostController {
 	/** DI */
 	private final PostService postService;
 	private final ImageService imageService;
+	private final UserHelper userHelper;
 
 	/**
 	 * 投稿一覧を表示
@@ -111,6 +113,10 @@ public class PostController {
 			form.setIsNew(true);
 			return "post/form";
 		}
+		
+		// 投稿のユーザーIDにログインユーザーのIDを格納
+		  Long currentUserId = userHelper.getCurrentUserId();
+		  form.setUserId(currentUserId);
 
 		// エンティティへの変換(Postオブジェクトの作成)
 		Post post = PostHelper.convertPost(form);

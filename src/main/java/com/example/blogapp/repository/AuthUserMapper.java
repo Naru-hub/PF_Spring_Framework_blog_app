@@ -12,6 +12,11 @@ public interface AuthUserMapper {
 	 AuthUser selectByUsername(String username);
 	 
 	 /**
+	  * ユーザー名でユーザーIDを取得
+	  */
+	 AuthUser selectByUserId(String username);
+	 
+	 /**
 	  * ユーザー新規登録
 	  */
 	 void insertUser(AuthUser authuser);
