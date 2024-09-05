@@ -29,6 +29,7 @@ public class PostHelper {
 	public static PostForm convertPostForm(Post post) {
 		PostForm form = new PostForm();
 		form.setId(post.getId());
+		form.setUserId(post.getUserId());
 		form.setTitle(post.getTitle());
 		form.setDescription(post.getDescription());
 		/** 画像のパスをセット */

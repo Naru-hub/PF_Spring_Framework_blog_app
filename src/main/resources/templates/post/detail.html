@@ -57,8 +57,10 @@
 					<tr>
 						<th class="table-dark"></th>
 						<td class="d-flex">
-							<a th:href="@{/posts/edit/{id}(id=${post.id})}" class="btn btn-outline-dark mx-2">編集</a>
-							<form th:action="@{/posts/delete/{id}(id=${post.id})}" method="post">
+							<!-- 投稿のユーザーとログインユーザーが同じなら編集ボタンを表示 -->
+							<a th:if="${post.userId == currentUserId}" th:href="@{/posts/edit/{id}(id=${post.id})}" class="btn btn-outline-dark mx-2">編集</a>
+							<!-- 投稿のユーザーとログインユーザーが同じなら削除ボタンを表示 -->
+							<form th:if="${post.userId == currentUserId}" th:action="@{/posts/delete/{id}(id=${post.id})}" method="post">
 								<input type="submit" value="削除" class="btn btn-outline-danger" />
 							</form>
 							<a th:href="@{/posts}" class="btn btn-outline-secondary mx-2">一覧へ戻る</a>
