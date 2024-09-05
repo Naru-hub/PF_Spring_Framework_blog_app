@@ -13,6 +13,7 @@ public class PostHelper {
 	public static Post convertPost(PostForm form) {
 		Post post = new Post();
 		post.setId(form.getId());
+		post.setUserId(form.getUserId());
 		post.setTitle(form.getTitle());
 		post.setDescription(form.getDescription());
 		/** 画像のパスをセット */
