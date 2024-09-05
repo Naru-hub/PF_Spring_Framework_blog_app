@@ -14,7 +14,7 @@
 		<div class="row">
 			<div class="col-md-8 offset-md-2 mb-5">
 				<!-- タイトル：登録 or 編集 -->
-				<h2 th:if="${postForm.isNew}" class="mt-3">新規投稿</h2>
+				<h2 th:if="${postForm.isNew}" class="mt-3">投稿作成</h2>
 				<h2 th:unless="${postForm.isNew}" class="mt-3">投稿編集</h2>
 				<!-- アクション：登録 or 編集 -->
 				<form th:action="${postForm.isNew} ? @{/posts/save} : @{/posts/update}" th:object="${postForm}"
