@@ -38,7 +38,7 @@
 							<td class="text-center">
 								<!-- 画像が存在する場合 -->
 								<span th:if="${post.imagePath != null and post.imagePath != ''}">
-									<img th:src="@{${post.imagePath}}" alt="Example Image" class="img-thumbnail w-25">
+									<img th:src="@{${post.imagePath}}" alt="Post Image" class="img-thumbnail w-25">
 								</span>
 								<!-- 画像が存在しない場合 -->
 								<span th:unless="${post.imagePath != null and post.imagePath != ''}">
@@ -55,7 +55,7 @@
 				</table>
 			</div>
 			<div class="col-md-2 mt-5">
-				<a th:href="@{/posts/form}" class="btn btn-outline-dark">投稿作成</a>		
+				<a th:href="@{/posts/form}" class="btn btn-outline-dark">投稿作成</a>
 			</div>
 		</div>
 	</div>
