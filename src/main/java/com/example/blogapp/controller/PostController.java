@@ -127,6 +127,13 @@ public class PostController {
 		Post post = PostHelper.convertPost(form);
 		// 登録実行(データベースへ保存)
 		postService.insertPost(post);
+
+		// 画像の保存処理が終わるまで待機
+		try {
+			Thread.sleep(3000);
+		} catch (Exception e) {
+		}
+
 		// フラッシュメッセージ
 		attributes.addFlashAttribute("message", "新しい投稿が作成されました");
 		// RPGパターン
@@ -241,6 +248,12 @@ public class PostController {
 				if (newImageFilename != null && !oldImageFilename.equals(newImageFilename)) {
 					imageService.deleteImage(oldImageFilename);
 				}
+			}
+
+			// 画像の保存処理が終わるまで待機
+			try {
+				Thread.sleep(3000);
+			} catch (Exception e) {
 			}
 
 			// フラッシュメッセージ
