@@ -37,7 +37,7 @@
 							<a class="nav-link text-white" th:href="@{/posts}"><i class="fa-solid fa-list"></i> 投稿一覧</a>
 						</li>
 						<li sec:authorize="isAuthenticated()" class="nav-item">
-							<a class="nav-link text-white" th:href="@{/posts}">	<i class="fa-regular fa-circle-user"></i> ユーザー情報</a>
+							<a class="nav-link text-white" th:href="@{/user}">	<i class="fa-regular fa-circle-user"></i> ユーザー情報</a>
 						</li>
 						<li sec:authorize="isAuthenticated()" class="nav-item">
 							<form th:action="@{/logout}" method="post">
