@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.blogapp.entity.Post;
 import com.example.blogapp.form.PostForm;
 import com.example.blogapp.helper.PostHelper;
+import com.example.blogapp.helper.UserHelper;
 import com.example.blogapp.service.ImageService;
 import com.example.blogapp.service.PostService;
 
@@ -32,6 +33,7 @@ public class PostController {
 	/** DI */
 	private final PostService postService;
 	private final ImageService imageService;
+	private final UserHelper userHelper;
 
 	/**
 	 * 投稿一覧を表示
@@ -60,6 +62,11 @@ public class PostController {
 		if (post != null) {
 			// データがある場合はモデルに格納
 			model.addAttribute("post", postService.findByIdPost(id));
+
+			// 現在ログインしているユーザーIDを取得してモデルに追加
+			Long currentUserId = userHelper.getCurrentUserId();
+			model.addAttribute("currentUserId", currentUserId);
+
 			return "post/detail";
 		} else {
 			// 対象データがない場合
@@ -112,10 +119,21 @@ public class PostController {
 			return "post/form";
 		}
 
+		// 投稿のユーザーIDにログインユーザーのIDを格納
+		Long currentUserId = userHelper.getCurrentUserId();
+		form.setUserId(currentUserId);
+
 		// エンティティへの変換(Postオブジェクトの作成)
 		Post post = PostHelper.convertPost(form);
 		// 登録実行(データベースへ保存)
 		postService.insertPost(post);
+
+		// 画像の保存処理が終わるまで待機
+		try {
+			Thread.sleep(3000);
+		} catch (Exception e) {
+		}
+
 		// フラッシュメッセージ
 		attributes.addFlashAttribute("message", "新しい投稿が作成されました");
 		// RPGパターン
@@ -131,15 +149,26 @@ public class PostController {
 	 */
 	@GetMapping("/edit/{id}")
 	public String edit(@PathVariable Integer id, Model model, RedirectAttributes attributes) {
-		// IDに対応する「すること」を取得
+		// 現在ログインしているユーザーのIDを取得
+		Long currentUserId = userHelper.getCurrentUserId();
+
+		// 投稿IDに対応する投稿を取得
 		Post target = postService.findByIdPost(id);
 
 		if (target != null) {
-			// 対象データがある場合はFormへ変換
-			PostForm form = PostHelper.convertPostForm(target);
-			// モデルに格納
-			model.addAttribute("postForm", form);
-			return "post/form";
+			// 投稿が存在する場合、ユーザーが投稿の所有者であるか確認
+			if (target.getUserId().equals(currentUserId)) {
+				// 投稿のユーザーが現在ログインしているユーザーであれば、Formに変換、編集画面に遷移
+				PostForm form = PostHelper.convertPostForm(target);
+				// モデルに格納
+				model.addAttribute("postForm", form);
+				return "post/form";
+			} else {
+				// 所有者が異なる場合、エラーメッセージを表示してリダイレクト
+				attributes.addFlashAttribute("errorMessage", "編集権限がありません");
+				return "redirect:/posts";
+			}
+
 		} else {
 			// 対象データがない場合はフラッシュメッセージを表示
 			attributes.addFlashAttribute("errorMessage", "対象データがありません");
@@ -168,8 +197,18 @@ public class PostController {
 			return "post/form";
 		}
 
+		// 現在のログインユーザーIDを取得
+		Long currentUserId = userHelper.getCurrentUserId();
+
 		// 元の投稿の取得
 		Post existingPost = postService.findByIdPost(form.getId());
+
+		// 投稿が存在しない、またはユーザーIDが一致しない場合
+		if (existingPost == null || !existingPost.getUserId().equals(currentUserId)) {
+			attributes.addFlashAttribute("errorMessage", "投稿が見つからないか、編集権限がありません");
+			return "redirect:/posts";
+		}
+
 		// 編集するイメージファイル名とイメージパス
 		String newImageFilename = null;
 		String newImagePath = null;
@@ -183,7 +222,7 @@ public class PostController {
 					// ファイルパスを相対パスでセットする
 					newImagePath = "/uploads/" + newImageFilename;
 					form.setImagePath(newImagePath);
-					
+
 				} catch (IOException e) {
 					// 画像のアップロードに失敗した場合の処理
 					bindingResult.reject("fileUploadError", "画像のアップロードに失敗しました。");
@@ -209,6 +248,12 @@ public class PostController {
 				if (newImageFilename != null && !oldImageFilename.equals(newImageFilename)) {
 					imageService.deleteImage(oldImageFilename);
 				}
+			}
+
+			// 画像の保存処理が終わるまで待機
+			try {
+				Thread.sleep(3000);
+			} catch (Exception e) {
 			}
 
 			// フラッシュメッセージ
@@ -238,34 +283,43 @@ public class PostController {
 	@PostMapping("/delete/{id}")
 	public String delete(@PathVariable Integer id, RedirectAttributes attributes) {
 		try {
-	        // 投稿の取得
-	        Post post = postService.findByIdPost(id);
-	        
-	        if (post != null) {
-	            // 投稿に関連する画像のパスを取得
-	            String imagePath = post.getImagePath();
-	            
-	            // 投稿を削除
-	            postService.deletePost(id);
+			// 現在のログインユーザーIDを取得
+			Long currentUserId = userHelper.getCurrentUserId();
 
-	            // 画像ファイルを削除
-	            if (imagePath != null && !imagePath.isEmpty()) {
-	                String filename = imagePath.replace("/uploads/", "");
-	                imageService.deleteImage(filename);
-	            }
+			// 投稿の取得
+			Post post = postService.findByIdPost(id);
 
-	            // フラッシュメッセージ
-	            attributes.addFlashAttribute("message", "投稿が削除されました");
-	        } else {
-	            // 投稿が見つからない場合の処理
-	            attributes.addFlashAttribute("errorMessage", "対象データがありません");
-	        }
-	    } catch (Exception e) {
-	        // 例外が発生した場合の処理
-	        attributes.addFlashAttribute("errorMessage", "投稿の削除に失敗しました");
-	    }
+			if (post != null) {
+				// 投稿が存在する場合、ユーザーが投稿の所有者であるか確認
+				if (post.getUserId().equals(currentUserId)) {
+					// 投稿に関連する画像のパスを取得
+					String imagePath = post.getImagePath();
 
-	    // RPGパターン
-	    return "redirect:/posts";
+					// 投稿を削除
+					postService.deletePost(id);
+
+					// 画像ファイルを削除
+					if (imagePath != null && !imagePath.isEmpty()) {
+						String filename = imagePath.replace("/uploads/", "");
+						imageService.deleteImage(filename);
+					}
+
+					// 投稿の削除成功の場合
+					attributes.addFlashAttribute("message", "投稿が削除されました");
+				} else {
+					// 所有者が異なる場合の処理
+					attributes.addFlashAttribute("errorMessage", "削除権限がありません");
+				}
+			} else {
+				// 投稿が見つからない場合
+				attributes.addFlashAttribute("errorMessage", "対象データがありません");
+			}
+		} catch (Exception e) {
+			// 例外が発生した場合
+			attributes.addFlashAttribute("errorMessage", "投稿の削除に失敗しました");
+		}
+
+		// RPGパターン
+		return "redirect:/posts";
 	}
 }

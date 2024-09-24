@@ -18,6 +18,9 @@ public class PostForm {
 	/** ID */
 	private Integer id;
 	
+	/** 投稿を作成したユーザーのID */
+	private Long userId;
+	
 	/** タイトル */
 	@NotBlank(message = "タイトルは必須項目です。")
 	private String title;

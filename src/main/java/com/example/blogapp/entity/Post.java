@@ -15,6 +15,8 @@ import lombok.NoArgsConstructor;
 public class Post {
 	/** id */
 	private Integer id;
+	/** 投稿を作成したユーザーのID */
+	private Long userId;
 	/** タイトル */
 	private String title;
 	/** 詳細 */

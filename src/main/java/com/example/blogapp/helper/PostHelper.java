@@ -13,10 +13,11 @@ public class PostHelper {
 	public static Post convertPost(PostForm form) {
 		Post post = new Post();
 		post.setId(form.getId());
+		post.setUserId(form.getUserId());
 		post.setTitle(form.getTitle());
 		post.setDescription(form.getDescription());
 		/** 画像のパスをセット */
-		post.setImagePath(form.getImagePath()); 
+		post.setImagePath(form.getImagePath());
 		return post;
 	}
 
@@ -28,10 +29,11 @@ public class PostHelper {
 	public static PostForm convertPostForm(Post post) {
 		PostForm form = new PostForm();
 		form.setId(post.getId());
+		form.setUserId(post.getUserId());
 		form.setTitle(post.getTitle());
 		form.setDescription(post.getDescription());
 		/** 画像のパスをセット */
-		form.setImagePath(post.getImagePath()); 
+		form.setImagePath(post.getImagePath());
 		// 更新画面設定
 		form.setIsNew(false);
 		return form;
