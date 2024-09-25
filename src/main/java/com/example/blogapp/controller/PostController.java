@@ -29,6 +29,9 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/posts")
 @RequiredArgsConstructor
 public class PostController {
+	
+	// 画像ファイル格納ディレクトリパス
+    private final String IMAGE_UPLOAD_DIR_PATH = "/uploads/post/";
 
 	/** DI */
 	private final PostService postService;
@@ -109,7 +112,7 @@ public class PostController {
 		// 画像ファイルの処理
 		try {
 			if (form.getFile() != null && !form.getFile().isEmpty()) {
-				String imagePath = "/uploads/" + imageService.handleImageUpload(form.getFile());
+				String imagePath = this.IMAGE_UPLOAD_DIR_PATH + imageService.handleImageUpload(form.getFile(), "post");
 				form.setImagePath(imagePath);
 			}
 		} catch (IOException e) {
@@ -218,9 +221,9 @@ public class PostController {
 			if (form.getFile() != null && !form.getFile().isEmpty()) {
 				try {
 					// 新しい画像のファイル名を取得
-					newImageFilename = imageService.handleImageUpload(form.getFile());
+					newImageFilename = imageService.handleImageUpload(form.getFile(), "post");
 					// ファイルパスを相対パスでセットする
-					newImagePath = "/uploads/" + newImageFilename;
+					newImagePath = this.IMAGE_UPLOAD_DIR_PATH + newImageFilename;
 					form.setImagePath(newImagePath);
 
 				} catch (IOException e) {
@@ -244,9 +247,9 @@ public class PostController {
 			// 古い画像ファイルの削除（更新処理が成功した場合のみ）
 			if (existingPost != null && existingPost.getImagePath() != null) {
 				// 相対パスからファイル名を取得
-				String oldImageFilename = existingPost.getImagePath().replace("/uploads/", "");
+				String oldImageFilename = existingPost.getImagePath().replace(this.IMAGE_UPLOAD_DIR_PATH, "");
 				if (newImageFilename != null && !oldImageFilename.equals(newImageFilename)) {
-					imageService.deleteImage(oldImageFilename);
+					imageService.deleteImage(oldImageFilename, "post");
 				}
 			}
 
@@ -265,7 +268,7 @@ public class PostController {
 			// 投稿の更新処理でエラーが発生した場合の処理
 			if (newImageFilename != null) {
 				// 新しい画像ファイルを削除
-				imageService.deleteImage(newImageFilename);
+				imageService.deleteImage(newImageFilename, "post");
 			}
 
 			bindingResult.reject("updateError", "投稿の更新に失敗しました。");
@@ -300,8 +303,8 @@ public class PostController {
 
 					// 画像ファイルを削除
 					if (imagePath != null && !imagePath.isEmpty()) {
-						String filename = imagePath.replace("/uploads/", "");
-						imageService.deleteImage(filename);
+						String filename = imagePath.replace(this.IMAGE_UPLOAD_DIR_PATH, "");
+						imageService.deleteImage(filename, "post");
 					}
 
 					// 投稿の削除成功の場合
