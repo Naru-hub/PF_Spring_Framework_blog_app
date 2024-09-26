@@ -29,9 +29,9 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/posts")
 @RequiredArgsConstructor
 public class PostController {
-	
+
 	// 画像ファイル格納ディレクトリパス
-    private final String IMAGE_UPLOAD_DIR_PATH = "/uploads/post/";
+	private final String IMAGE_UPLOAD_DIR_PATH = "/uploads/post/";
 
 	/** DI */
 	private final PostService postService;

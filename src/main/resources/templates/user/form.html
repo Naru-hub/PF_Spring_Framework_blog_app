@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+	<title>ユーザー情報編集画面</title>
+</head>
+
+<body>
+	<div id="header" th:insert="common::header"></div>
+	<div class="container mb-2" style="min-height: 600px;">
+		<div class="row">
+			<h2 class="offset-md-2 mt-3">ユーザー情報編集フォーム</h2>
+			<div class="col-md-8 offset-md-2 mb-5">
+				<form th:action="@{/user/update}" th:object="${userForm}" method="post" enctype="multipart/form-data">
+					<!-- idは更新時に必要なため、hiddenで持つ -->
+					<input type="hidden" th:field="*{id}">
+
+					<div class="my-3">
+						<label for="username" class="form-label">ユーザー名</label>
+						<input type="text" th:field="*{username}" class="form-control" id="username"
+							placeholder="名前を入力">
+						<!-- ユーザー名：バリデーションエラー表示 -->
+						<span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" style="color: red;">
+							エラーがあれば表示
+						</span>
+					</div>
+					<div class="my-3">
+						<label for="email">email</label>
+						<input type="text" th:field="*{email}" class="form-control" id="email" name="email"
+							placeholder="メールアドレスを入力">
+						<!-- メールアドレス：バリデーションエラー表示 -->
+						<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color: red;">
+							エラーがあれば表示
+						</span>
+					</div>
+					<div class="my-3">
+						<label for="file" class="form-label">画像</label>
+						<input type="file" class="form-control" id="file" name="file">
+						<!-- 画像の表示 -->
+						<div>
+							<img th:if="${userForm.imagePath != null and userForm.imagePath != ''}"
+								th:src="@{${userForm.imagePath}}" alt="Current Image" class="img-thumbnail w-25 mt-1">
+							<img th:if="${userForm.imagePath == null or userForm.imagePath == ''}"
+								th:src="@{/uploads/profile_default.jpg}" alt="Default Image"
+								class="img-thumbnail w-25 mt-1">
+						</div>
+					</div>
+
+					<div class="d-flex flex-row-reverse">
+						<!-- ボタン -->
+						<input type="submit" value="更新" class="btn btn-outline-dark">
+						<a th:href="@{/user}" class="btn btn-outline-secondary mx-2">キャンセル</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

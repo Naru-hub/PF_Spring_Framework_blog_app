@@ -1,6 +1,6 @@
 -- userのデータ
-INSERT INTO auth_users (username, password, email)
-VALUES ('testUser', '$2a$10$bnXFUQawIzzLGELILFMjkego0N50DKS1J/XVcHBJ2YO3I3Zh8yMhS', 'test@test.com');
+INSERT INTO auth_users (username, password, email, created_at, updated_at)
+VALUES ('testUser', '$2a$10$bnXFUQawIzzLGELILFMjkego0N50DKS1J/XVcHBJ2YO3I3Zh8yMhS', 'test@test.com', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 
 -- 1件目のデータ
 INSERT INTO posts (user_id, title, description, image_path, created_at, updated_at)
