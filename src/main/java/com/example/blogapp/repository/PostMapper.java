@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.example.blogapp.entity.Post;
+import com.example.blogapp.entity.PostWithUser;
 
 /**
  * 投稿：リポジトリ
@@ -15,12 +16,12 @@ public interface PostMapper {
 	/**
 	 * 全ての投稿を取得
 	 */
-	List<Post> selectAll();
+	List<PostWithUser> selectAll();
 
 	/**
 	 * 指定されたIDの投稿を取得
 	 */
-	Post selectById(@Param("id") Integer id);
+	PostWithUser selectById(@Param("id") Integer id);
 
 	/**
 	 * 投稿を登録

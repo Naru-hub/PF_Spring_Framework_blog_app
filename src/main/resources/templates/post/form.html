@@ -41,12 +41,12 @@
 						<label for="file" class="form-label">画像</label>
 						<input type="file" class="form-control" id="file" name="file">
 						<!-- 画像の表示 -->
-						<div>
+						<div class="mt-2">
 							<img th:if="${postForm.imagePath != null and postForm.imagePath != ''}"
-								th:src="@{${postForm.imagePath}}" alt="Current Image" class="img-thumbnail w-25 mt-1">
+								th:src="@{${postForm.imagePath}}" alt="Current Image" class="img-fluid" style="max-width: 100%; height: 130px; object-fit: cover;">
 							<img th:if="${postForm.imagePath == null or postForm.imagePath == ''}"
-								th:src="@{/uploads/profile_default.jpg}" alt="Default Image"
-								class="img-thumbnail w-25 mt-1">
+								th:src="@{/uploads/default_img/book_default.png}" alt="Default Image"
+								class="img-fluid" style="max-width: 100%; height: 130px; object-fit: cover;">
 						</div>
 					</div>
 

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.blogapp.entity.Post;
+import com.example.blogapp.entity.PostWithUser;
 import com.example.blogapp.form.PostForm;
 import com.example.blogapp.helper.PostHelper;
 import com.example.blogapp.helper.UserHelper;
@@ -59,7 +60,7 @@ public class PostController {
 	@GetMapping("/{id}")
 	public String detail(@PathVariable Integer id, Model model, RedirectAttributes attributes) {
 		// 投稿IDに対応する投稿を取得
-		Post post = postService.findByIdPost(id);
+		PostWithUser post = postService.findByIdPost(id);
 
 		// 対象データがあるか
 		if (post != null) {

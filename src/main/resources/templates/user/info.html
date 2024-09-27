@@ -17,14 +17,14 @@
 				<div class="col-md-8 offset-md-2 text-center">
 					<!-- 画像が存在する場合 -->
 					<span th:if="${userInfo.imagePath != null and userInfo.imagePath != ''}">
-						<img th:src="@{${userInfo.imagePath}}" alt="User Image" class="img-fluid mb-2"
+						<img th:src="@{${userInfo.imagePath}}" alt="User Image" class="img-fluid"
 							style="max-width: auto; height: 150px;">
 					</span>
 					<!-- 画像が存在しない場合 -->
 					<span th:unless="${userInfo.imagePath != null and userInfo.imagePath != ''}">
-						<img th:src="@{/uploads/profile_default.jpg}" alt="Example Image" class="img-fluid"
+						<img th:src="@{/uploads/default_img/profile_default.jpg}" alt="Example Image" class="img-fluid"
 							style="max-width: auto; height: 150px;">
-						<p>No image available</p>
+						<p>No user image</p>
 					</span>
 				</div>
 				<table class="table table-bordered my-5">

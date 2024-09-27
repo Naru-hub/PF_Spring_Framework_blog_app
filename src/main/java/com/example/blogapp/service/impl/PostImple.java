@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.blogapp.entity.Post;
+import com.example.blogapp.entity.PostWithUser;
 import com.example.blogapp.repository.PostMapper;
 import com.example.blogapp.service.PostService;
 
@@ -23,12 +24,12 @@ public class PostImple implements PostService {
 	private final PostMapper postMapper;
 
 	@Override
-	public List<Post> findAllPost() {
+	public List<PostWithUser> findAllPost() {
 		return postMapper.selectAll();
 	}
 
 	@Override
-	public Post findByIdPost(Integer id) {
+	public PostWithUser findByIdPost(Integer id) {
 		return postMapper.selectById(id);
 	}
 
