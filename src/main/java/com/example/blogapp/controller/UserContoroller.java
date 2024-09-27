@@ -123,8 +123,8 @@ public class UserContoroller {
 	 */
 	@PostMapping("/update")
 	public String update(@Validated UserForm form,
-			Model model,
 			BindingResult bindingResult,
+			Model model,
 			RedirectAttributes attributes,
 			HttpSession session) {
 		// バリデーションチェック

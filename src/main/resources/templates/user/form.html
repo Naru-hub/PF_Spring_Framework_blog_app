@@ -20,32 +20,25 @@
 
 					<div class="my-3">
 						<label for="username" class="form-label">ユーザー名</label>
-						<input type="text" th:field="*{username}" class="form-control" id="username"
-							placeholder="名前を入力">
+						<input type="text" th:field="*{username}" class="form-control" id="username" placeholder="名前を入力">
 						<!-- ユーザー名：バリデーションエラー表示 -->
-						<span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" style="color: red;">
-							エラーがあれば表示
-						</span>
+						<span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" style="color: red;"></span>
 					</div>
+
 					<div class="my-3">
 						<label for="email">email</label>
-						<input type="text" th:field="*{email}" class="form-control" id="email" name="email"
-							placeholder="メールアドレスを入力">
+						<input type="text" th:field="*{email}" class="form-control" id="email" name="email" placeholder="メールアドレスを入力">
 						<!-- メールアドレス：バリデーションエラー表示 -->
-						<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color: red;">
-							エラーがあれば表示
-						</span>
+						<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color: red;"></span>
 					</div>
+
 					<div class="my-3">
 						<label for="file" class="form-label">画像</label>
 						<input type="file" class="form-control" id="file" name="file">
 						<!-- 画像の表示 -->
 						<div>
-							<img th:if="${userForm.imagePath != null and userForm.imagePath != ''}"
-								th:src="@{${userForm.imagePath}}" alt="Current Image" class="img-thumbnail w-25 mt-1">
-							<img th:if="${userForm.imagePath == null or userForm.imagePath == ''}"
-								th:src="@{/uploads/profile_default.jpg}" alt="Default Image"
-								class="img-thumbnail w-25 mt-1">
+							<img th:if="${userForm.imagePath != null and userForm.imagePath != ''}" th:src="@{${userForm.imagePath}}" alt="Current Image" class="img-thumbnail w-25 mt-1">
+							<img th:if="${userForm.imagePath == null or userForm.imagePath == ''}" th:src="@{/uploads/profile_default.jpg}" alt="Default Image" class="img-thumbnail w-25 mt-1">
 						</div>
 					</div>
 
