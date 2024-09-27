@@ -47,13 +47,14 @@ public class UserContoroller {
 
 		// 現在ログインしているユーザーのIDを取得
 		Long currentUserId = userHelper.getCurrentUserId();
-		// ログを追加
+		// 確認用ログ
 		System.out.println("Current User ID: " + currentUserId);
 		
 		// 認証情報からユーザーのIDが取得できなかった場合
 	    if(currentUserId == null) {
 	    	// セッションからユーザーIDを取得
 	        currentUserId = (Long) session.getAttribute("currentUserId");
+	        // 確認用ログ
 	        System.out.println("Session Current User ID: " + currentUserId);
 
 	    }
@@ -78,6 +79,7 @@ public class UserContoroller {
 	public String edit(@PathVariable Integer id, Model model, RedirectAttributes attributes, HttpSession session) {
 		// 現在ログインしているユーザーのIDを取得
 		Long currentUserId = userHelper.getCurrentUserId();
+		// 確認用ログ
 		System.out.println("Edit Current User ID: " + currentUserId);
 		
 		
@@ -85,6 +87,7 @@ public class UserContoroller {
 		if(currentUserId == null) {
 			// セッションからユーザーIDを取得
 	        currentUserId = (Long) session.getAttribute("currentUserId");
+	        // 確認用ログ
 	        System.out.println("Edit Session Current User ID: " + currentUserId);
 		}
 	        
@@ -135,12 +138,14 @@ public class UserContoroller {
 
 		// 現在のログインユーザーIDを取得
 		Long currentUserId = userHelper.getCurrentUserId();
+		// 確認用ログ
 		System.out.println("Update Current User ID: " + currentUserId);
 		
 		// 認証情報からユーザーのIDが取得できなかった場合
 	    if(currentUserId == null) {
 	    	// セッションからユーザーIDを取得
 	        currentUserId = (Long) session.getAttribute("currentUserId");
+	        // 確認用ログ
 	        System.out.println("Update Session Current User ID: " + currentUserId);
 
 	    }
@@ -195,7 +200,7 @@ public class UserContoroller {
 
 			// 画像の保存処理が終わるまで待機
 			try {
-				Thread.sleep(3000);
+				Thread.sleep(4000);
 			} catch (Exception e) {
 			}
 
