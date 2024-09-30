@@ -14,7 +14,7 @@ SET user_image_path = '/uploads/default_img/user2_default.jpg' where id = 2;
 -- 投稿のデータ
 -- 1件目のデータ
 INSERT INTO posts (user_id, title, description, image_path, created_at, updated_at)
-VALUES ('1', 'スッキリJava', '優しい解説で分かりやすい。オブジェクト指向入門に最適です！！', '/uploads/default_img/java_default.png', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+VALUES ('1', 'スッキリJava', 'Javaが初めてでも優しい解説で分かりやすい。オブジェクト指向入門に最適です！！', '/uploads/default_img/java_default.png', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 -- 2件目のデータ
 INSERT INTO posts (user_id, title, description, image_path, created_at, updated_at)
 VALUES ('2', 'ソフトウェアエンジニアリングの新人研修', 'webの大まかな流れがつかめ、開発がどのように進んでいくかを知るのによかった。　新人の時に読むことをおすすめします。', '/uploads/default_img/it_basic_default.png', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
