@@ -56,7 +56,7 @@
 								<!-- 画像が存在しない場合 -->
 								<span th:unless="${post.userImagePath != null and post.userImagePath != ''}">
 									<img th:src="@{/uploads/default_img/profile_default.jpg}" alt="Example Image" class="img-fluid" style="max-width: 100%; height: 80px; object-fit: cover;">
-									<p>No user image</p>
+									<p th:text="${post.username}">投稿者</p>
 								</span>
 							</td>
 							<td th:text="${post.title}"></td>
