@@ -24,5 +24,10 @@ public interface AuthUserMapper {
 	 /**
 	  * ユーザー新規登録
 	  */
-	 void insertUser(AuthUser authuser);
+	 void insertUser(AuthUser authUser);
+	 
+	 /**
+	  * ユーザー情報を編集
+	  */
+	 void updateUser(AuthUser authUser);
 }

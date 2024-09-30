@@ -2,7 +2,7 @@
 DROP TABLE IF EXISTS posts;
 DROP TABLE IF EXISTS auth_users;
 -- テーブルの作成
--- user情報を格納するテーブル
+-- ユーザー情報を格納するテーブル
 CREATE TABLE auth_users
 (
    -- id:主キー
@@ -13,8 +13,14 @@ CREATE TABLE auth_users
    password VARCHAR (255) NOT NULL,
    -- メールアドレス
    email VARCHAR(100) NOT NULL UNIQUE,
+   -- ユーザー画像パス
+   user_image_path TEXT,
    -- アカウントの有効/無効
-   enabled BOOLEAN DEFAULT TRUE
+   enabled BOOLEAN DEFAULT TRUE,
+   -- 作成日
+   created_at TIMESTAMP without time zone,
+   -- 更新日
+   updated_at TIMESTAMP without time zone
 );
 -- 投稿(POST)テーブル
 CREATE TABLE posts
@@ -26,13 +32,13 @@ CREATE TABLE posts
    -- タイトル:NULL不許可
    title varchar (255) NOT NULL,
    -- 詳細
-   description text,
+   description TEXT,
    -- 画像パス
-   image_path text,
+   image_path TEXT,
    -- 作成日
-   created_at timestamp without time zone,
+   created_at TIMESTAMP without time zone,
    -- 更新日
-   updated_at timestamp without time zone,
+   updated_at TIMESTAMP without time zone,
    -- auth_usersテーブルへの外部キー制約
    FOREIGN KEY (user_id) REFERENCES auth_users(id)
 );

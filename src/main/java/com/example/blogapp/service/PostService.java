@@ -3,6 +3,7 @@ package com.example.blogapp.service;
 import java.util.List;
 
 import com.example.blogapp.entity.Post;
+import com.example.blogapp.entity.PostWithUser;
 
 /**
  * Post:サービス
@@ -11,12 +12,12 @@ public interface PostService {
 	/**
 	 * 全ての投稿を検索
 	 */
-	List<Post> findAllPost();
+	List<PostWithUser> findAllPost();
 
 	/**
 	 * 指定されたIDの投稿を検索
 	 */
-	Post findByIdPost(Integer id);
+	PostWithUser findByIdPost(Integer id);
 
 	/**
 	 * 投稿を新規登録 

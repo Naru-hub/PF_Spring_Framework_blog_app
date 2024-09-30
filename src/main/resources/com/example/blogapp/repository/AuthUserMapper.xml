@@ -4,30 +4,44 @@
 	<!-- ユーザー名で認証情報を検索 -->
 	<select id="selectByUsername"
 		resultType="com.example.blogapp.entity.AuthUser">
-		SELECT username, password 
-		FROM auth_users 
+		SELECT username, password
+		FROM auth_users
 		WHERE username = #{username}
 	</select>
-	
+
 	<!-- ユーザー名でユーザーIDを検索 -->
 	<select id="selectByUserId"
 		resultType="com.example.blogapp.entity.AuthUser">
 		SELECT id, username
-		FROM auth_users 
+		FROM auth_users
 		WHERE username = #{username}
 	</select>
-	
+
 	<!-- ログインしているユーザーのIDでユーザー情報を検索 -->
 	<select id="selectByLoginUserId"
 		resultType="com.example.blogapp.entity.AuthUser">
-		SELECT id, username, email
-		FROM auth_users 
+		SELECT id, username, email, user_image_path as imagePath
+		FROM auth_users
 		WHERE id = #{LoginUserId}
 	</select>
-	
+
 	<!-- ユーザー登録 -->
-	<insert id="insertUser" parameterType="com.example.blogapp.entity.AuthUser">
-        INSERT INTO auth_users (username, password, email, enabled)
-        VALUES (#{username}, #{password}, #{email}, #{enabled})
-    </insert>
+	<insert id="insertUser"
+		parameterType="com.example.blogapp.entity.AuthUser">
+		INSERT INTO auth_users (username, password, email, enabled, created_at,
+		updated_at)
+		VALUES (#{username}, #{password}, #{email}, #{enabled}, CURRENT_TIMESTAMP,
+		CURRENT_TIMESTAMP)
+	</insert>
+
+	<!-- 更新 -->
+	<update id="updateUser"
+		parameterType="com.example.blogapp.entity.AuthUser">
+		UPDATE auth_users
+		SET username = #{username},
+		email = #{email},
+		user_image_path = #{imagePath},
+		updated_at = CURRENT_TIMESTAMP
+		WHERE id = #{id};
+	</update>
 </mapper>

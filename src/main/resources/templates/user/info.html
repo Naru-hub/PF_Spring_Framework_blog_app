@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html　xmlns:th="http: //www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<meta charset="UTF-8">
@@ -14,6 +14,19 @@
 		<div class="row">
 			<h2 class="offset-md-2 mt-3">ユーザー情報</h2>
 			<div class="col-md-8 offset-md-2 text-center">
+				<div class="col-md-8 offset-md-2 text-center">
+					<!-- 画像が存在する場合 -->
+					<span th:if="${userInfo.imagePath != null and userInfo.imagePath != ''}">
+						<img th:src="@{${userInfo.imagePath}}" alt="User Image" class="img-fluid"
+							style="max-width: auto; height: 150px;">
+					</span>
+					<!-- 画像が存在しない場合 -->
+					<span th:unless="${userInfo.imagePath != null and userInfo.imagePath != ''}">
+						<img th:src="@{/uploads/default_img/profile_default.jpg}" alt="Example Image" class="img-fluid"
+							style="max-width: auto; height: 150px;">
+						<p>No user image</p>
+					</span>
+				</div>
 				<table class="table table-bordered my-5">
 					<tr>
 						<th class="table-dark">ユーザーID</th>
@@ -26,6 +39,12 @@
 					<tr>
 						<th class="table-dark">メールアドレス</th>
 						<td th:text="${userInfo.email}"></td>
+					</tr>
+					<tr>
+						<th class="table-dark"></th>
+						<!-- 投稿のユーザーとログインユーザーが同じなら編集ボタンを表示 -->
+						<td><a th:href="@{/user/edit/{id}(id=${userInfo.id})}" class="btn btn-outline-dark mx-2">編集</a>
+						</td>
 					</tr>
 				</table>
 			</div>
