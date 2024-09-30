@@ -1,13 +1,13 @@
 -- userのデータ
 -- 1人目のデータ
 INSERT INTO auth_users (username, password, email, created_at, updated_at)
-VALUES ('テスト　太郎', '$2a$10$bnXFUQawIzzLGELILFMjkego0N50DKS1J/XVcHBJ2YO3I3Zh8yMhS', 'test@test.com', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+VALUES ('テスト　太郎', '$2a$10$I53eTbgLsU7F3TJJIelTkuXcGHzOCMYTbKIRX1W1tsHWZbN3RzLa.', 'test@test.com', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 UPDATE auth_users 
 SET user_image_path = '/uploads/default_img/user1_default.jpg' where id = 1;
 
 -- 2人目のデータ
 INSERT INTO auth_users (username, password, email, created_at, updated_at)
-VALUES ('テスト　花子', '$2a$10$bnXFUQawIzzLGELILFMjkego0N50DKS1J/XVcHBJ2YO3I3Zh8yMhS', 'taro@test.com', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
+VALUES ('テスト　花子', '$2a$10$I53eTbgLsU7F3TJJIelTkuXcGHzOCMYTbKIRX1W1tsHWZbN3RzLa.', 'taro@test.com', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 UPDATE auth_users 
 SET user_image_path = '/uploads/default_img/user2_default.jpg' where id = 2;
 
