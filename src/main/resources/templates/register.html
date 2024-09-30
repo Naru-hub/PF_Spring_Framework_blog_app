@@ -10,7 +10,7 @@
 
 <body>
 	<div id="header" th:insert="common::header"></div>
-	<div class="container">
+	<div class="container" style="min-height: 600px;">
 		<div class="row">
 			<div class="col-md-8 offset-md-2 my-5">
 				<h2>新規登録画面</h2>
@@ -20,7 +20,7 @@
 				</div>
 				<form th:action="@{/register}" th:object="${registerForm}" method="post">
 					<div class="my-3">
-						<label for="username" class="form-label">username</label>
+						<label for="username" class="form-label">名前</label>
 						<input type="text" th:field="*{username}" class="form-control" id="username" name="username"
 							placeholder="ユーザー名を入力">
 						<span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" style="color: red;">
@@ -28,7 +28,7 @@
 						</span>
 					</div>
 					<div class="my-3">
-						<label for="password" class="form-label">password</label>
+						<label for="password" class="form-label">パスワード</label>
 						<input type="password" th:field="*{password}" class="form-control" id="password" name="password"
 							placeholder="パスワードを入力">
 						<span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" style="color: red;">
@@ -36,7 +36,19 @@
 						</span>
 					</div>
 					<div class="my-3">
-						<label for="email">email</label>
+						<label for="confirm_password" class="form-label">確認用パスワード</label>
+						<input type="password" th:field="*{confirmPassword}" class="form-control" id="confirmPassword"
+							name="confirmPassword" placeholder="確認用パスワードを入力">
+						<span th:if="${#fields.hasErrors('samePassword')}" th:errors="*{samePassword}"
+							style="color: red;">
+							エラーがあれば表示
+						</span>
+						<span th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" style="color: red;">
+							エラーがあれば表示
+						</span>
+					</div>
+					<div class="my-3">
+						<label for="email" class="form-label">メールアドレス</label>
 						<input type="text" th:field="*{email}" class="form-control" id="email" name="email"
 							placeholder="e-mailアドレスを入力">
 						<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color: red;">
@@ -50,6 +62,7 @@
 			</div>
 		</div>
 	</div>
+	<div id="footer" th:insert="common::footer"></div>
 </body>
 
 </html>

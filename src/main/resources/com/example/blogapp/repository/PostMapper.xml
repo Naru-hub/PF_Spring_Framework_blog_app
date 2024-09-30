@@ -8,7 +8,8 @@
 		p.created_at AS createdAt, p.updated_at AS updatedAt,
 		u.username, u.user_image_path AS userImagePath
 		FROM posts p
-		JOIN auth_users u ON p.user_id = u.id;
+		JOIN auth_users u ON p.user_id = u.id
+		ORDER BY p.id;
 	</select>
 
 	<!-- 1件検索 -->
