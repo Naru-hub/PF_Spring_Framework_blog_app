@@ -36,6 +36,14 @@
 						</span>
 					</div>
 					<div class="my-3">
+						<label for="confirm_password" class="form-label">password</label>
+						<input type="password" th:field="*{confirmPassword}" class="form-control" id="confirmPassword" name="confirmPassword"
+							placeholder="確認用パスワードを入力">
+						<span th:if="${#fields.hasErrors('samePassword')}" th:errors="*{samePassword}" style="color: red;">
+							エラーがあれば表示
+						</span>
+					</div>
+					<div class="my-3">
 						<label for="email">email</label>
 						<input type="text" th:field="*{email}" class="form-control" id="email" name="email"
 							placeholder="e-mailアドレスを入力">
