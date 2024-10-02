@@ -22,7 +22,7 @@
 					<div class="my-3">
 						<label for="username" class="form-label">名前</label>
 						<input type="text" th:field="*{username}" class="form-control" id="username" name="username"
-							placeholder="ユーザー名を入力">
+							placeholder="名前を入力">
 						<span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" style="color: red;">
 							エラーがあれば表示
 						</span>
@@ -50,7 +50,7 @@
 					<div class="my-3">
 						<label for="email" class="form-label">メールアドレス</label>
 						<input type="text" th:field="*{email}" class="form-control" id="email" name="email"
-							placeholder="e-mailアドレスを入力">
+							placeholder="メールアドレスを入力">
 						<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color: red;">
 							エラーがあれば表示
 						</span>
