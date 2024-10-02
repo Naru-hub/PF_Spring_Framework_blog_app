@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	<title>新規登録画面</title>
+	<title>ユーザー新規登録フォーム</title>
 </head>
 
 <body>
@@ -13,7 +13,7 @@
 	<div class="container" style="min-height: 600px;">
 		<div class="row">
 			<div class="col-md-8 offset-md-2 my-5">
-				<h2>新規登録画面</h2>
+				<h2>ユーザー新規登録</h2>
 				<!-- エラーメッセージの表示 -->
 				<div th:if="${errorMessage}" style="color: red;">
 					<p th:text="${errorMessage}"></p>
@@ -56,7 +56,7 @@
 						</span>
 					</div>
 					<div class="my-3">
-						<input type="submit" value="Register" class="btn btn-outline-dark">
+						<input type="submit" value="登録" class="btn btn-outline-dark">
 					</div>
 				</form>
 			</div>
