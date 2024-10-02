@@ -19,14 +19,14 @@
 					<input type="hidden" th:field="*{id}">
 
 					<div class="my-3">
-						<label for="username" class="form-label">ユーザー名</label>
+						<label for="username" class="form-label">名前</label>
 						<input type="text" th:field="*{username}" class="form-control" id="username" placeholder="名前を入力">
 						<!-- ユーザー名：バリデーションエラー表示 -->
 						<span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" style="color: red;"></span>
 					</div>
 
 					<div class="my-3">
-						<label for="email">email</label>
+						<label for="email">メールアドレス</label>
 						<input type="text" th:field="*{email}" class="form-control" id="email" name="email" placeholder="メールアドレスを入力">
 						<!-- メールアドレス：バリデーションエラー表示 -->
 						<span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" style="color: red;"></span>
@@ -51,6 +51,7 @@
 			</div>
 		</div>
 	</div>
+	<div id="footer" th:insert="common::footer"></div>
 </body>
 
 </html>
